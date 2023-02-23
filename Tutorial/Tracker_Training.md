@@ -152,5 +152,4 @@ The `batch_sub_script.py` file takes care of the creation submission and babysit
 ```
 the other script, `slurm_template.sh` is basically a template that is taken and given to the cluster to build a `scram` environment with `CMSSW` and run the job.
 
- 
-
+Author: Tiziano Bevilacqua, for further questions tiziano.bevilacqua@cern.ch
