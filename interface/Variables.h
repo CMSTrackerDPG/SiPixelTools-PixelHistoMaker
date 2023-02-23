@@ -907,8 +907,8 @@ public:
     // Phase 1
     tot_intlumi_invnb = 0;
     //input = fopen ("input/run_ls_instlumi_pileup_2017.txt","r");
-    //input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
-    input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
+    input = fopen ("input/run_ls_instlumi_pileup_phase1.txt","r");
+    //input = fopen ("input/run_ls_intlumi_pileup_phase1_Run3.txt","r");
     a = 1;
     while (a==1) {
       a = fscanf (input, "%d", &run);
@@ -1792,8 +1792,7 @@ public:
 	!(BpI && BLD==11 && PNL==1 && RNG==1 && m.roc==2) );
 
     bool goodmod_RunIII_phase1 = m.det==0 ? 
-      ( LYR==1 ? 1 :
-  LYR==2 ?
+      ( LYR==2 ?
 	!(BmI && LDR== 1 && MOD==4 && m.roc< 8) &&
 	!(BmI && LDR== 3 && MOD==3 && m.roc< 8) &&
 	!(BmI && LDR== 4 && MOD==1 && m.roc>=8) &&

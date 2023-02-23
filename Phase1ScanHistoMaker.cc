@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
 		       (e.bx==291||e.bx==1185||e.bx==2079) ? 2 :
 		       (size_t)-1; }, "BXm1;BX0;BXp1", "First BX -1;First BX;First BX +1", "601,418,633");
   
-  sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-46;   }, "2022SepMiniScan", "", "1");
+  sh.AddNewPostfix("DelayScans",        [&v]{ /*!!!Fix the line to fetch the correct scan id!!!*/  }, "2022SepMiniScan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-45;   }, "2022Jul_FullScan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-44;   }, "2022Jun_MiniScan", "", "1");
   //sh.AddNewPostfix("DelayScans",        [&v]{ if (v.pf_delay_scan==-1) return (size_t)-1; return (size_t)v.pf_delay_scan-43;   }, "2021Nov_MiniScan", "", "1");

@@ -412,13 +412,12 @@ namespace scans {
       // Scan 3 - Sep 2022 mini scan
       // http://cmsonline.cern.ch/cms-elog/1157556
     case 359576: return 46;
-    case 359577: return 46;
-    case 359578: return 46;
-    case 359579: return 46;
-    case 359580: return 46;
-    case 359581: return 46;
-    case 359582: return 46;
-    case 359584: return 46;
+    //.
+    //.
+    //. Fill here the new run numbers
+    //. and scan id
+    //.
+    //.
 
     default:
       return -1;
@@ -1188,12 +1187,11 @@ namespace scans {
       // Scan 3 - Sep 2022 mini scan
       // http://cmsonline.cern.ch/cms-elog/1157556
     case 359576: return 5.;
-    case 359577: return 3.;
-    case 359578: return 2.;
-    case 359579: return 1.;
-    case 359580: return -3.;
-    case 359581: return -2.;
-    case 359582: return -1.;
+    //.
+    //.
+    //. Fill here the new run numbers and delays
+    //.
+    //.
     case 359584: return 0.;
 
       /*
