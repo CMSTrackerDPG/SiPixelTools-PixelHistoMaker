@@ -1,7 +1,7 @@
 # Tracker Training - Phase1PixelHistoMaker
 This file contains instruction to run a simple example that (hopefully) will make clearer hot to run an analysis using the [CMSTrackerDPG/SiPixelTools-PixelHistoMaker](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker). The two main use cases of the script in this directory are the measurement of the performance of the CMS Pixel Tracker via the Hit Efficiency and Cluster Properties monitoring, and performing the Timing Scans, needed to study the performances of the detector as a function of the delay applied to different parts of the  Pixel Tracker. These tasks are performed running two scripts: `Phase1PixelHistoMaker` and `Phase1ScanHistoMaker`.
 
-For the sake of this demonstration we will try to provide instrusctions to run a MiniTiming scan using data from Run3 (September 2022).
+For the sake of this demonstration we will try to provide instrusctions to run a Mini Timing Scan using data from Run3 (September 2022).
 
 ## Installation
 
@@ -41,7 +41,7 @@ Now let's have a look to the structure of the code we will be using, opening a f
 ### Phase1ScanHistoMaker.cc
 
 The first ~90 lines of this file are used to configure the scan: 
-* define which version of the included files has to be used $\rightarrow$ [lines](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L40-L71) 40-71, 
+* define which version of the included files has to be used $\rightarrow$ [lines 40-71](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L40-L71), 
 * choose the type of scan `Timing` or `Bias` to be performed and select which class of histograms we want to "activate" and save in the ouput $\rightarrow$ [lines 83-86](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L83-L86),
 * define the configuration of the Pixel detector $\rightarrow$ [lines 74-79](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L74-L78),
 * select which class of trees has to be used in the scan $\rightarrow$ [lines 30-32,](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L30-L32) [lines 129-133](https://github.com/CMSTrackerDPG/SiPixelTools-PixelHistoMaker/blob/e44607129b5538995d8f843f6323b3171582eb65/Phase1ScanHistoMaker.cc#L129-L133)
@@ -114,8 +114,7 @@ make -j8 Phase1ScanHistoMaker
 ```
 then we can run the Timing Scan on the NTuples starting with run 359576, we run it twice (first with the `-b` flag to speed up) to update the BadROCs list. 
 ``` 
-#root://t3dcachedb03.psi.ch:1094/pnfs/psi.ch/cms/trivcat should be an alternative to root://cms-xrd-global.cern.ch/
-root://eoscms.cern.ch//eos/cms/store/group/dpg_tracker_pixel/comm_pixel/TrackerTrainingDays2023/TimingScanExercise/NTuple_run359576.root
+./Phase1ScanHistoMaker -b -o PHM_PHASE1_out/Histo_TimingScan_Sep2022_run359576_badrocrun.root root://eoscms.cern.ch//eos/cms/store/group/dpg_tracker_pixel/comm_pixel/TrackerTrainingDays2023/TimingScanExercise/NTuple_run359576.root
 
 ./Phase1ScanHistoMaker -o PHM_PHASE1_out/Histo_TimingScan_Sep2022_run359576.root root://eoscms.cern.ch//eos/cms/store/group/dpg_tracker_pixel/comm_pixel/TrackerTrainingDays2023/TimingScanExercise/NTuple_run359576.root
 ``` 
