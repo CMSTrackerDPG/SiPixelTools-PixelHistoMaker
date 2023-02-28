@@ -130,10 +130,11 @@ Now if everything proceeded smoothly our output file will contain a ton of histo
 ```
 python Tutorial/MakeTimingScanTutorialPlots.py PHM_PHASE1_out/Histo_TimingScan_Sep2022_merged.root
 ```
+Note that the file input file location is hardcoded in the plot script, so use it from the `PixelHistoMaker` main directory.
 
 ### Running on the cluster
 
-When you have to run on a big number of files it is useful to split the workload in different jobs, since the `PahseI*HistoMaker` scripts would probably crush otherwise (for `PixelHistoMaker` expecially this problem is quite severe). To help doing there are different option: older version of the script was run with `HTCondor`, this submissions script however are not maintained anymore (and also not updated), I am currently running the jobs on the cluster using [slurm workload manager](https://slurm.schedmd.com/documentation.html) and some scripts to help create and babysit the jobs can be found in the `slurm` directory. 
+When you have to run on a big number of files it is useful to split the workload in different jobs, since the `PahseI*HistoMaker` scripts would probably crush otherwise (for `PixelHistoMaker` expecially this problem is quite severe). To help doing there are different option: older version of the script was run with `HTCondor`, this submissions script however are not maintained anymore (and also not updated), I am currently running the jobs on the cluster using [slurm workload manager](https://slurm.schedmd.com/documentation.html) and some scripts to help create and babysit the jobs can be found in the `slurm` directory (sad note: these script are not compatible with `lxplus`). 
 
 The `batch_sub_script.py` file takes care of the creation submission and babysitting of the jobs, its usage is rather simple and should work out of the box. It takes some input files and options that are described inside:
 ```

@@ -8,7 +8,7 @@ ROOT.gStyle.SetOptStat(True)
 
 metadata = {
     "TimingScan": {
-        "file": "../PHM_PHASE1_out/Histo_TimingScan_Sep2022_merged.root",
+        "file": "./PHM_PHASE1_out/Histo_TimingScan_Sep2022_merged.root",
         "int_lumi": 10.9,
         "fill": [8210],
         "bias": 300,
