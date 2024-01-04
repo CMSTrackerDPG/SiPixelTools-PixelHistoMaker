@@ -408,6 +408,50 @@ namespace scans {
     case 355127: return 45;
     case 355128: return 45;
     case 355129: return 45;
+	  // 2022
+      // Scan 3 - Sep 2022 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1157556
+    case 359576: return 46;
+    case 359577: return 46;
+    case 359578: return 46;
+    case 359579: return 46;
+    case 359580: return 46;
+    case 359581: return 46;
+    case 359582: return 46;
+    case 359584: return 46;
+
+      // 2023
+      // Scan 1 - Apr 2023 mini scan
+      // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1177502
+    case 365835: return 47;
+    case 365836: return 47;
+    case 365837: return 47;
+    case 365838: return 47;
+    case 365839: return 47;
+    case 365840: return 47;
+    case 365841: return 47;
+    case 365842: return 47;
+    
+      // Scan 2 - Apr 2023 full scan
+      // hhttps://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1179227
+    case 366406: return 48;
+    case 366409: return 48;
+    case 366410: return 48;
+    case 366413: return 48;
+    case 366419: return 48;
+    case 366422: return 48;
+    case 366424: return 48;
+    case 366426: return 48;
+    case 366427: return 48;
+    case 366429: return 48;
+    case 366432: return 48;
+    case 366436: return 48;
+    case 366437: return 48;
+    case 366438: return 48;
+    case 366439: return 48;
+    case 366440: return 48;
+    case 366441: return 48;
+    case 366442: return 48;
 
 
     default:
@@ -1173,6 +1217,51 @@ namespace scans {
     case 355127: return   -15;
     case 355128: return   -17;
     case 355129: return   -19;
+
+	// 2022
+      // Scan 3 - Sep 2022 mini scan
+      // http://cmsonline.cern.ch/cms-elog/1157556
+    case 359576: return 5.;
+    case 359577: return 3.;
+    case 359578: return 2.;
+    case 359579: return 1.0;
+    case 359580: return -3.;
+    case 359581: return -2.;
+    case 359582: return -1.0;
+    case 359584: return 0.;
+
+      // 2023
+      // Scan 1 - Apr 2022 mini scan
+      // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1177502
+    case 365835: return -3.;
+    case 365836: return -2.;
+    case 365837: return -1.;
+    case 365838: return 1.;
+    case 365839: return 2.;
+    case 365840: return 3.;
+    case 365841: return 5.;
+    case 365842: return 0.;
+
+        // Scan 2 - Apr 2023 full scan
+      // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1179227
+    case 366406: return 1.;
+    case 366409: return 2.;
+    case 366410: return 3.;
+    case 366413: return 4.;
+    case 366419: return 5.;
+    case 366422: return 6.;
+    case 366424: return 7.;
+    case 366426: return 9.;
+    case 366427: return -1.;
+    case 366429: return -2.;
+    case 366432: return -3.;
+    case 366436: return -5.;
+    case 366437: return -7.;
+    case 366438: return -9.;
+    case 366439: return -11.;
+    case 366440: return -13.;
+    case 366441: return -15.;
+    case 366442: return 0.;
 
       /*
     case 2: 
