@@ -521,6 +521,9 @@ int main(int argc, char* argv[]) {
 #endif
   
   std::function<void()> add_special_histos = [&sh]{};
+  std::vector<std::string> AllCluCuts      = {"ZeroBias","Nvtx"};
+  std::vector<std::string> OnCluCutsPt0p6  = {"ZeroBias","Nvtx","Pt>0.6GeV","ValidHit"};
+  std::vector<std::string> OnCluCutsPt1p0  = {"ZeroBias","Nvtx","Pt>1.0GeV","ValidHit"};
   //__________________________________________________________________________________
   //                                Timing Scans
   
@@ -598,8 +601,7 @@ int main(int argc, char* argv[]) {
   sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_TrackEta",          .pfs={"Layers","DelayScans","11ns"}, .cuts={"DelayScan","ZeroBias"}, .draw="PE1", .opt="", .ranges={0,0, osz1,osz2} });
   sh.AddHistos("traj",  { .fill="AvgOnTrkCluSize_vs_TrackEta",          .pfs={"DelayScans","Layers","11ns"}, .cuts={"DelayScan","ZeroBias"}, .draw="PE1", .opt="", .ranges={0,0, osz1,osz2} });
   // ntrack
-  add_special_histos = [&sh,&AllCluCuts,&OnCluCutsPt0p6,&OnCluCutsPt1p0]() {sh.AddHistos("evt",   { .fill="AvgNTracks_vs_NPileup",              .pfs={"Runs"}, .cuts={}, .draw="PE1", .opt="", .ranges={0,0, 0,0} });}
-
+  add_special_histos = [&sh,&AllCluCuts,&OnCluCutsPt0p6,&OnCluCutsPt1p0]() {sh.AddHistos("evt",   { .fill="AvgNTracks_vs_NPileup",              .pfs={"Runs"}, .cuts={}, .draw="PE1", .opt="", .ranges={0,0, 0,0} });};
   // InstLumi
   sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumi",             .pfs={"Delays","LayersDisks"},  .cuts={"ZeroBias","EffCutsScans"},        .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
   sh.AddHistos("traj", { .fill="DColEfficiency_vs_InstLumi",            .pfs={"Delays","Layers"},       .cuts={"ZeroBias","DColEffCutsScans"},    .draw="PE1", .opt="", .ranges={0,0, 0,1, 0.4,0.4} });
