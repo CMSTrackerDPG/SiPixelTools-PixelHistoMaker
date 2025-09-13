@@ -453,6 +453,40 @@ namespace scans {
     case 366441: return 48;
     case 366442: return 48;
 
+
+	  // Scan 3 - Apr 2024 full scan
+      // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1208943
+	case 378994: return 49;
+	case 378995: return 49;
+	case 378996: return 49;
+	case 378997: return 49;
+	case 378998: return 49;
+	case 378999: return 49;
+	case 379000: return 49;
+	case 379001: return 49;
+	case 379003: return 49;
+	case 379004: return 49;
+	case 379005: return 49;
+	case 379006: return 49;
+	case 379007: return 49;
+	case 379008: return 49;
+	case 379009: return 49;
+	case 379010: return 49;
+  
+	  // Scan - May 2025
+	  //http://cmsonline.cern.ch/cms-elog/1258657
+	case 391674: return 50;
+	case 391675: return 50;
+	case 391676: return 50;
+	case 391677: return 50;
+	case 391678: return 50;
+	case 391679: return 50;
+	case 391683: return 50;
+	case 391684: return 50;
+	case 391685: return 50;
+	case 391686: return 50;
+	case 391687: return 50;
+
     default:
       return -1;
     }
@@ -1262,6 +1296,41 @@ namespace scans {
     case 366440: return -13.;
     case 366441: return -15.;
     case 366442: return 0.;
+
+
+	  // Scan 3 - Apr 2024 full scan
+	  // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1208943
+	case 378994: return -13.;
+	case 378995: return -11.;
+	case 378996: return -9.;
+	case 378997: return -7.;
+	case 378998: return -5.;
+	case 378999: return -3.;
+	case 379000: return -2.;
+	case 379001: return -1.;
+	case 379003: return 0.;
+	case 379004: return 1.;
+	case 379005: return 2.;
+	case 379006: return 3.;
+	case 379007: return 4.;
+	case 379008: return 5.;
+	case 379009: return 6.;
+	case 379010: return 7.;
+  
+  	  // 2025
+	  // Scan - May 2025 mini scan
+	  // http://cmsonline.cern.ch/cms-elog/1258657
+	case 391674: return   -9;
+	case 391675: return   -7;
+	case 391676: return   -5;
+	case 391677: return   -3;
+	case 391678: return   -2;
+	case 391679: return   -1;
+	case 391683: return   0;
+	case 391684: return   1;
+	case 391685: return   2;
+	case 391686: return   3;
+	case 391687: return   4;
 
       /*
     case 2: 
