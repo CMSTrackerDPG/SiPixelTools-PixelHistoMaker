@@ -455,7 +455,7 @@ namespace scans {
 
 
 	  // Scan 3 - Apr 2024 full scan
-      // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1208943
+      // http://cmsonline.cern.ch/cms-elog/1208943
 	case 378994: return 49;
 	case 378995: return 49;
 	case 378996: return 49;
@@ -1299,7 +1299,7 @@ namespace scans {
 
 
 	  // Scan 3 - Apr 2024 full scan
-	  // https://cmsonline.cern.ch/webcenter/portal/cmsonline/Common/Elog?_piref683379043.strutsAction=%2FviewMessageDetails.do%3FmsgId%3D1208943
+	  // http://cmsonline.cern.ch/cms-elog/1208943
 	case 378994: return -13.;
 	case 378995: return -11.;
 	case 378996: return -9.;
