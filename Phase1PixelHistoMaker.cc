@@ -570,9 +570,9 @@ int main(int argc, char* argv[]) {
   sh.AddNewFillParams("LowInstLumi",      { .nbin=  50, .bins={      0,   5000}, .fill=[&v]{ return v.instlumi*1000;   }, .axis_title="Instantaneous Luminosity [#scale[0.8]{#times10^{30}cm^{-2}s^{-1}}]", .def_range={0,2000}});
   sh.AddNewFillParams("PileupNorm",       { .nbin=  50, .bins={      0,    100}, .fill=[&v]{ return v.rel_fluence_l1*v.pileup;   }, .axis_title="Rel. fluence #times Average Pile-up", .def_range={0,70}});
   sh.AddNewFillParams("NBx",              { .nbin= 360, .bins={      0,   3600}, .fill=[&v]{ return v.nbx;             }, .axis_title="Number of bunch-crossings"});
-  sh.AddNewFillParams("IntLumi",          { .nbin= 250, .bins={      0,    250}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity [fb^{-1}]"});
+  sh.AddNewFillParams("IntLumi",          { .nbin= 270, .bins={      0,    270}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity [fb^{-1}]"});
   sh.AddNewFillParams("IntLumiRunII",     { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-29.9261; }, .axis_title="Delivered luminosity - Run 2 [fb^{-1}]"});
-  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 212, .bins={      0,    212}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
+  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 270, .bins={      0,    270}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
   sh.AddNewFillParams("IntLumi2016",      { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-34.1252; }, .axis_title="Delivered luminosity - 2016 [fb^{-1}]", .def_range={0,150}});
   sh.AddNewFillParams("IntLumi2017",      { .nbin= 100, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
   sh.AddNewFillParams("IntLumi2017Fine",  { .nbin=1000, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
