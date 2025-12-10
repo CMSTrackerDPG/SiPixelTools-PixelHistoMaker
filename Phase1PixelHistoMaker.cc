@@ -250,6 +250,8 @@ int main(int argc, char* argv[]) {
                      float abseta = std::abs(t.trk.eta);
                      return size_t(abseta>=2.4 ? -1 : abseta/0.4);
                    }, "Eta[0to2.0++0.4]to[0.4to2.4++0.4]", "|#eta| #subset [[0to2.0++0.4],[0.4to2.4++0.4]]", col6_rainbow_dark);
+  sh.AddNewPostfix("AbsEtaLt1",      []{   return 0;         }, "AbsEtaLt1",  "|#eta|<1", "1");
+  sh.AddNewPostfix("AbsEtaGt2",      []{   return 0;         }, "AbsEtaGt2",  "|#eta|>2", "1");
   sh.AddNewPostfix("TrkBeta",           [&t]{ 
 		       double beta = std::abs(3.1416/2 - std::abs(t.beta));
 		       return (size_t)(beta<0.1 ? 0 : beta>1.2 ? 1 : -1);
@@ -814,6 +816,8 @@ int main(int argc, char* argv[]) {
   sh.AddNewCut("NStrip>10",           [&t]{ return t.trk.strip>10;         });
   sh.AddNewCut("Pt>0.6GeV",           [&t]{ return t.trk.pt>0.6;           });
   sh.AddNewCut("Pt>1.0GeV",           [&t]{ return t.trk.pt>1.0;           });
+  sh.AddNewCut("AbsEta<1",            [&t]{ return std::abs(t.trk.eta)<1.0;});
+  sh.AddNewCut("AbsEta>2",            [&t]{ return std::abs(t.trk.eta)>2.0;});
   sh.AddNewCut("MainFills",           [&v]{ return v.main_filling_schemes; });
   sh.AddNewCut("HighPU",              [&v]{ return v.cut_highpu;           });
   sh.AddNewCut("GlobalMuon",          [&e]{ return e.tmuon!=-9999;         });
@@ -1825,8 +1829,13 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_IntLumiRunIII", .pfs={main12, "LayersDisks" },                                         .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_IntLumiRunIII", .pfs={"Data2022" , "LayersDisks"},                                     .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_IntLumiRunIII", .pfs={},                                                               .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
+    
+    //Hit Effuciency vs InstLumi - eta cuts
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_IntLumiRunIII", .pfs={main12, "LayersDisks", "AbsEtaLt1"},                             .cuts={"ZeroBias","EffCuts","AbsEta<1"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="HitEfficiency_vs_IntLumiRunIII", .pfs={main12, "LayersDisks", "AbsEtaGt2" },                                         .cuts={"ZeroBias","EffCuts","AbsEta>2"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
 
-
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_IntLumiRunIII", .pfs={main12, "LayersDisks", "AbsEtaLt1" },                                         .cuts={"ZeroBias","EffCuts","AbsEta<1"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_IntLumiRunIII", .pfs={main12, "LayersDisks", "AbsEtaGt2" },                                         .cuts={"ZeroBias","EffCuts","AbsEta>2"},             .draw="PE1",  .opt="", .ranges={0,0, 0.95,1.00, 0.4,0.4} });
 
     // Normalized by fluence
     //sh.AddHistos("traj", { .fill="HitEfficiency_vs_InstLumiNorm",  .pfs={main1,       "Layer1"        },                 .cuts={"ZeroBias","EffCuts"},             .draw="PE1",  .opt="", .ranges={0,0, 0,0, 0.4,0.4} });
