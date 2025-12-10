@@ -83,10 +83,14 @@ parser.add_option("--missing",     dest="missing",     action="store_true", defa
 parser.add_option("--hadd",        dest="hadd",        action="store_true", default=False, help="Submit hadding job")
 parser.add_option("--step_two",    dest="step_2",      action="store_true", default=False, help="Option to merge merged outputs")
 parser.add_option("--step_three",  dest="step_3",      action="store_true", default=False, help="Option to merge merged merged outputs")
+parser.add_option("--step_four",   dest="step_4",      action="store_true", default=False, help="Option to merge merged merged outputs")
+parser.add_option("--step_five",   dest="step_5",      action="store_true", default=False, help="Option to merge merged merged outputs")
+parser.add_option("--summary",     dest="summary",     action="store_true", default=False, help="Print info about job")
 parser.add_option("--debug",       dest="debug",       action="store_true", default=False, help="Debug verbosity and skip removing of some intermediate files")
 parser.add_option("--outdir",      dest="OUTDIR",      type="string",       default="/pnfs/psi.ch/cms/trivcat/store/user/bevila_t/test2/phys/xpluscharm/pixeltest", help="Output directory (Default: pnfs/.../pxeltest)")
 parser.add_option("--queue",       dest="queue",       type="string",       default="standard", help="slurm queue to submit jobs to, default: standard, if this needs to be changed one should also have a look at the --time option")
 parser.add_option("--time",        dest="time",        type="string",       default="12:00:00", help="slurm job time limit, default: 12:00:00, make sure not to exceed time limit for each partition (for limits ref to https://wiki.chipp.ch/twiki/bin/view/CmsTier3/SlurmUsage) ")
+parser.add_option("--mem",         dest="mem",         type="string",       default="16000",    help="slurm job memory, default: 16000")
 parser.add_option("--taskname",    dest="TASKNAME",    type="string",       default="HISTO_MAKER_DEFAULT", help="Output directory (Default: HISTO_MAKER_DEFAULT)")
 parser.add_option("--prog",        dest="PROG",        type="string",       default="Phase1PixelHistoMaker", help="The main program to run")
 (opt,args) = parser.parse_args()
@@ -161,6 +165,15 @@ if opt.create:
         os.system("echo \"Total number of input files: "+str(len(files))+"\" >> "+EXEC_PATH+"/summary.txt")
         os.system("echo \"Program to run: "+opt.PROG+"\" >> "+EXEC_PATH+"/summary.txt")
 
+        if os.path.isdir("./filelists"):
+            if not os.listdir("./filelists"):
+                print("Filelist directory is empty")
+            else:    
+                print("Filelist directory is not empty, removing old filelists...")
+                os.system("rm filelists/*")
+        else:
+            print("Given filelist directory doesn't exist")
+
         for i, filename in enumerate(files):
             #idx = (int((i/(float(len(files))/100)) // 1) if (len(files) > 2) else 100)
             idx = int(i/opt.NFILE)
@@ -173,10 +186,13 @@ if opt.create:
     #change queue and execution time if needed
     if opt.queue != "standard":
         os.system("sed \"s;\#SBATCH --partition=standard;\#SBATCH --partition="+opt.queue+";g\" slurm_jobscript.sh > tmp")
-        os.system("mv tmp slurm_jobscript.sh")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
     if opt.time != "12:00:00":
         os.system("sed -E \"s;\#SBATCH --time=([0-9]+):00:00;\#SBATCH --time="+opt.time+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
-        os.system("mv tmp slurm_jobscript.sh")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
+    if opt.mem != "16000":
+        os.system("sed -E \"s;\#SBATCH --mem=([0-9]+)000;\#SBATCH --mem="+opt.mem+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
     
     # Prepare submission script with "sbatch [job name] [out-log] [out-err] slurm_jobscript.sh [stringa inutile] [job_label] [input_files_list] [output dir] [executable_name]  
     print ("")
@@ -202,10 +218,25 @@ if opt.create:
         EXE("sh test.sh") 
     print ("-"*60)
 
+
+if not opt.create:
+    # change queue and execution time if needed and only if you're not creating the 
+    # job, otherwise it is handled in the previous section
+    if opt.queue != "standard":
+        os.system("sed \"s;\#SBATCH --partition=standard;\#SBATCH --partition="+opt.queue+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
+    if opt.time != "12:00:00":
+        os.system("sed -E \"s;\#SBATCH --time=([0-9]+):00:00;\#SBATCH --time="+opt.time+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
+    if opt.mem != "16000":
+        os.system("sed -E \"s;\#SBATCH --mem=([0-9]+)000;\#SBATCH --time="+opt.mem+";g\" "+EXEC_PATH+"/slurm_jobscript.sh > tmp")
+        os.system("mv tmp "+EXEC_PATH+"/slurm_jobscript.sh")
+
 # Same as before, ask for submission of jobs
-elif opt.submit:
+if opt.submit:
     os.chdir(EXEC_PATH) 
     EXEC_PATH = os.getcwd()
+    
     print ("-"*60)
     answ = input("Do you want to directly submit the jobs to slurm (all jobs or 1 test job)? (y/n/test) \n")
     if str(answ) == "y":
@@ -301,10 +332,9 @@ elif opt.resubmit:
         files = re.split(',|\n',files[0])
         for i,job in enumerate(files):
             if job == '': break
-            idx = int(i/(float(len(files))/100))
-            print ("preparing resubmission jobs list ["+"#"*idx+" "*(100-idx)+"]"+"  \r",
-            sys.stdout.flush())
-            os.system("grep "+job+" "+EXEC_PATH+"/alljobs.sh >> "+EXEC_PATH+"/resubmit.sh")
+            ash = int(100.0/(len(files))*(i+2))
+            print ("preparing resubmission jobs "+color_dict["cyan"]+"|"+"#"*ash+" "*(99-ash)+"|"+color_dict["end"], end="\r")
+            os.system("grep ' "+job+" ' "+EXEC_PATH+"/alljobs.sh >> "+EXEC_PATH+"/resubmit.sh")
     os.system("rm Seq jobnums output resubmit")
     print("\nDone: resubmit.sh file created at "+EXEC_PATH+"/resubmit.sh")
     print ("-"*60) 
@@ -312,6 +342,7 @@ elif opt.resubmit:
 # Submit hadd job for files in the output directory
 elif opt.hadd:
     print ("-"*60)
+    print("Merging step")
     with open(EXEC_PATH+"/summary.txt") as fl:
         lines = fl.readlines()
         for line in lines:
@@ -340,6 +371,22 @@ elif opt.hadd:
         njobs = int(sp.getoutput('ls -l '+OUT_PATH+'/'+TASKNAME+merged_dir+' | grep .root | wc -l'))
     elif opt.step_3:
         merged_dir = "/merged/merged"
+        merg = "merged | grep "
+        import subprocess as sp  
+        if int(sp.getoutput('ls -l filelists | grep merging | wc -l')) > 0: 
+            print("removing old filelists")
+            os.system("rm filelists/merging* ")
+        njobs = int(sp.getoutput('ls -l '+OUT_PATH+'/'+TASKNAME+merged_dir+' | grep .root | wc -l'))
+    elif opt.step_4:
+        merged_dir = "/merged/merged/merged"
+        merg = "merged | grep "
+        import subprocess as sp  
+        if int(sp.getoutput('ls -l filelists | grep merging | wc -l')) > 0: 
+            print("removing old filelists")
+            os.system("rm filelists/merging* ")
+        njobs = int(sp.getoutput('ls -l '+OUT_PATH+'/'+TASKNAME+merged_dir+' | grep .root | wc -l'))
+    elif opt.step_5:
+        merged_dir = "/merged/merged/merged/merged"
         merg = "merged | grep "
         import subprocess as sp  
         if int(sp.getoutput('ls -l filelists | grep merging | wc -l')) > 0: 
@@ -387,8 +434,10 @@ elif opt.hadd:
         #os.system("rm filelists/merging*")
 
     print ("-"*60)
-
     #print "submitting merging job..."
     #os.chdir(EXEC_PATH) 
     #os.system("sbatch --job-name="+TASKNAME+"_MERGING -o /work/%u/test/.slurm/%x_%A_MERGING.out -e /work/%u/test/.slurm/%x_%A_MERGING.err slurm_jobscript.sh "+TASKNAME+"_JOBMERGING MERGING "+EXEC_PATH+"/filelists/dummystring "+OUT_PATH+"/"+TASKNAME+" "+PROG+" --hadd")
     #print ("-"*60)
+
+elif opt.summary:
+    os.system(f"cat {EXEC_PATH}/summary.txt") 

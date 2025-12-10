@@ -11,6 +11,8 @@ echo "[`date`] Job started"
 echo "------------------------------------------------------------"
 DATE_START=`date +%s`
 
+CMSSW_VERSION="CMSSW_15_0_15_patch4"
+
 echo HOSTNAME: ${HOSTNAME}
 echo HOME: ${HOME}
 echo USER: ${USER}
@@ -70,13 +72,14 @@ echo "--------------------------------------------------------------------------
 echo "                          Creating JOB ["$2"]"
 echo
 
-export SCRAM_ARCH=slc7_amd64_gcc700
+# export SCRAM_ARCH=slc7_amd64_gcc700
+export SCRAM_ARCH=el9_amd64_gcc12
 cd ${TMPDIR}
 
-scramv1 project CMSSW CMSSW_10_2_16_UL
-cd CMSSW_10_2_16_UL/src
+scramv1 project CMSSW ${CMSSW_VERSION}
+cd ${CMSSW_VERSION}/src
 eval `scram runtime -sh`
-git clone https://github.com/TizianoBevilacqua/SiPixelTools-PixelHistoMaker.git SiPixelTools/PixelHistoMaker
+git clone https://github.com/nVassakis/SiPixelTools-PixelHistoMaker SiPixelTools/PixelHistoMaker
 cd SiPixelTools/PixelHistoMaker
 
 mkdir PHM_PHASE1_out
@@ -143,7 +146,7 @@ echo "Output: "
 ls -l $USERDIR/$output
 
 cd ../../../..
-rm -rf CMSSW CMSSW_10_2_16_UL
+rm -rf CMSSW ${CMSSW_VERSION}
 
 echo
 echo "--------------------------------------------------------------------------------"
