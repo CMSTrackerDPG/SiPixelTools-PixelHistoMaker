@@ -20,7 +20,7 @@ taskname/
 ├── Ntuple_0001.root
 ├── Ntuple_0002.root
 ├── ...
-├── Ntuple_XXXX.root
+└── Ntuple_XXXX.root
 ```
 
 ---
@@ -67,4 +67,72 @@ If `n` is chosen, the runs can be submitted later by running:
 python3 my_batch_sub_script.py --taskname Muon01_2025D.txt --submit
 ```
 
-The log output directory is defined inside `slurm_jobscript.sh`.
+A few things to have in mind during the submission:
+* Make sure the CMSSW release specified in the `PHM_PHASE1_out/Muon01_2025D/slurm_jobscript.sh` corresponds to the appropriate release that was querried  through  **DAS → Configs** for the specific era that is analyzed.
+* When running PixelHistoMaker running out of memory is a possibility. Empirically specifying `SBATCH --mem=16000` at `slurm_jobscript.sh` seems to suffice.
+* The default output directory should be changed in `my_batch_sub_script.py` script, or otherwise can be specified with the `--outdir` option. Also, the log output directory is defined in the `my_batch_sub_script.py` script.
+
+---
+
+### 5. Monitoring job status
+
+Check job progress with:
+```
+python3 my_batch_sub_script.py --taskname Muon01_2025D  --status
+```
+
+The script reports:
+
+- **Pending (PD)** jobs  
+- **Running (R)** jobs  
+- **Done** (STDOUT log exists)  
+- **Completed** (output ROOT file exists)
+
+If the number of Jobs and  number of Completed jobs match, then analyzing was most likely successfull. Perhaps a quick scan through the log files that have been copied in the output directory can help as well.
+
+---
+
+### 6. Output directory structure
+
+The following output directory structure once every job is completed
+
+```
+{OUT_PATH}/Muon01_2025D/
+├── logs/                 
+│   ├── {JOBNAME}_{JOBID}_0001.out
+│   ├── {JOBNAME}_{JOBID}_0001.err
+│   └── ...
+├── badrocs/                   
+│   ├── Badroc_List_0001.root
+│   ├── Badroc_List_0002.root
+│   └── ...
+├── merged/             
+│ 
+├── Histos_0001.root          
+├── Histos_0002.root
+└── ...
+```
+
+---
+
+
+### 7. Merging files
+
+After all analysis jobs complete successfully the next step is to merge the individual `Histos_*.root` files into a single output file using `hadd` utility. Since merging dozens of files in one step can fail, the script uses a staged approach:
+
+**Step 1: Initial merge**
+```
+python3 slurm/my_batch_sub_script.py --taskname Muon01_2025D --hadd --nfile 5
+```
+* Each merge job will combine 5 `Histos_*.root` files (specified by `--nfile`)
+* Submits parallel merge jobs to SLURM
+* Outputs: {OUT_PATH}/Muon01_2025D/merged/merged_histos_*.root
+
+**Step 2-5: Successive merging**
+```
+python3 slurm/my_batch_sub_script.py --taskname Muon01_2025D --hadd --nfile 5 --step_two
+python3 slurm/my_batch_sub_script.py --taskname Muon01_2025D --hadd --nfile 5 --step_three
+# ... and so on
+```
+
+
