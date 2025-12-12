@@ -201,3 +201,16 @@ This step is performed manually using the Phase1PixelHistoMaker executable. For 
 /histomaker/Muon01_2025C/merged/merged/merged/merged/merged_histos_0001.root \
 /histomaker/Muon01_2025D/merged/merged/merged/merged/merged_histos_0001.root
 ```
+
+### 10. Plotting
+
+The final merged ROOT file from all eras is used as input for the plotting script `scripts/MakePerformancePlots.py`.
+
+**For trend plots:** 
+* Update the `metadata_int` dictionary with the filepath to the all-eras merged ROOT file
+* Update detector condition markers according to relevant changes (CPE updates, HV changes, technical stops). The detector condition updates can be found [here](https://twiki.cern.ch/twiki/bin/viewauth/CMS/PixelOfflineConditionUpdates).
+
+
+**For cluster property plots:**
+* Update the `metadata` dictionary with the filepath to the ROOT file containing runs from a single fill
+* Set the `int_lumi` value corresponding to that fill
