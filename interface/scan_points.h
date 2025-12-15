@@ -1505,7 +1505,7 @@ namespace scans {
     case 321396: return 321393; //2018 Aug 17 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1058599
     case 322381: return 322381; 
     case 323524: return 323525; //2018 Sep 26 - MiniScan BPix+FPix http://cmsonline.cern.ch/cms-elog/1065392
-    default: return -1;
+    default: return 0;
     }
   }
 
@@ -7801,7 +7801,7 @@ namespace scans {
   
   
   int bias_voltage(int hv_scan_no, int run, int ls, int orbit, int det, int lay, int disk, int ring, size_t l1_new_module) {
-    if (hv_scan_no==-1) return det ? 300 : (run<238474 ? 150 : 200);
+    if (hv_scan_no==-1) return NOVAL_I;
     return (det==1) ? ((disk==1) ? hv_d1(run, ls, orbit, ring) : (disk==2) ? hv_d2(run, ls, orbit, ring) : (disk==3) ? hv_d3(run, ls, orbit, ring) : NOVAL_I) :
       ((lay==1) ? hv_l1(run, ls, orbit, l1_new_module) : (lay==2) ? hv_l2(run, ls, orbit) : (lay==3) ? hv_l3(run, ls, orbit) : (lay==4) ? hv_l4(run, ls, orbit) : NOVAL_I);
   }
