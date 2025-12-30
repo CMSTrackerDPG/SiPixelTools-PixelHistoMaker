@@ -766,6 +766,20 @@ for j,filename in enumerate(metadata_int):
         l_cpe[k].SetLineColor(ROOT.kOrange+4) 
         l_cpe[k].Draw("SAME")
     leg.AddEntry(l_cpe[0], "CPE calibration", 'l')
+
+    # pixel L1 threshold change
+    pixL1_threshold_lumi = [ 298.48 ]
+    l_pixL1 = []
+    for k, ls in enumerate(pixL1_threshold_lumi):
+        l_pixL1.append(
+            ROOT.TLine(ls, 0.89, ls, 1.005) if k != 0 else ROOT.TLine(ls, 0.89, ls, 1.005)
+        )
+        l_pixL1[k].SetLineWidth(1)
+        l_pixL1[k].SetLineStyle(7)      
+        l_pixL1[k].SetLineColor(ROOT.kGreen+3) 
+        l_pixL1[k].Draw("SAME")
+    leg.AddEntry(ROOT.nullptr, "", '')  # this is used to include a blank entry
+    leg.AddEntry(l_pixL1[0], "Pix. thr. change in L1", 'l')
   
     f1=ROOT.TF1("f1","x",0,metadata_int[filename]["int_lumi"])
     A1 = ROOT.TGaxis(0,1.005,metadata_int[filename]["int_lumi"],1.005,"f1",810,"-")
@@ -851,7 +865,7 @@ for j,filename in enumerate(metadata_int):
     c=ROOT.TCanvas('%s_Layers_run3' % (key.split("/")[0]), '%s_Layers_run3' % (key.split("/")[0]))
     c.SetCanvasSize(900,600)
     hist = []  
-    leg = ROOT.TLegend(0.15, 0.12, 0.525, 0.32)
+    leg = ROOT.TLegend(0.15, 0.115, 0.525, 0.345)
     leg.SetNColumns(2)
     for i,plot in enumerate(["Lay1_2021Data", "Lay2_2021Data", "Lay3_2021Data", "Lay4_2021Data"]):
         if i == 1: 
@@ -939,6 +953,20 @@ for j,filename in enumerate(metadata_int):
         l_cpe[k].SetLineColor(ROOT.kOrange+4) 
         l_cpe[k].Draw("SAME")
     leg.AddEntry(l_cpe[0], "CPE calibration", 'l')
+
+    # pixel L1 threshold change
+    pixL1_threshold_lumi = [ 298.48 ]
+    l_pixL1 = []
+    for k, ls in enumerate(pixL1_threshold_lumi):
+        l_pixL1.append(
+            ROOT.TLine(ls, 0., ls, 35) if k != 0 else ROOT.TLine(ls, 0, ls, 35.)
+        )
+        l_pixL1[k].SetLineWidth(1)
+        l_pixL1[k].SetLineStyle(7)      
+        l_pixL1[k].SetLineColor(ROOT.kGreen+3) 
+        l_pixL1[k].Draw("SAME")
+    leg.AddEntry(ROOT.nullptr, "", '')  # this is used to include a blank entry
+    leg.AddEntry(l_pixL1[0], "Pix. thr. change in L1", 'l')
    
     f1=ROOT.TF1("f1","x",0,metadata_int[filename]["int_lumi"])
     A1 = ROOT.TGaxis(0,35,metadata_int[filename]["int_lumi"],35,"f1",810,"-")
@@ -1112,6 +1140,20 @@ for j,filename in enumerate(metadata_int):
         l_cpe[k].SetLineColor(ROOT.kOrange+4) 
         l_cpe[k].Draw("SAME")
     leg.AddEntry(l_cpe[0], "CPE calibration", 'l')
+
+    # pixel L1 threshold change
+    pixL1_threshold_lumi = [ 298.48 ]
+    l_pixL1 = []
+    for k, ls in enumerate(pixL1_threshold_lumi):
+        l_pixL1.append(
+            ROOT.TLine(ls, 0., ls, 0.7) if k != 0 else ROOT.TLine(ls, 0., ls, 7.)
+        )
+        l_pixL1[k].SetLineWidth(1)
+        l_pixL1[k].SetLineStyle(7)      
+        l_pixL1[k].SetLineColor(ROOT.kGreen+3) 
+        l_pixL1[k].Draw("SAME")
+    leg.AddEntry(ROOT.nullptr, "", '')  # this is used to include a blank entry
+    leg.AddEntry(l_pixL1[0], "Pix. thr. change in L1", 'l')
   
 
     f1=ROOT.TF1("f1","x",0,metadata_int[filename]["int_lumi"])
@@ -1281,6 +1323,7 @@ for j,filename in enumerate(metadata_int):
         elif i > 5:
             leg.AddEntry(l_sep[0], "  ", '')
 
+            
         hist.append(file[j].Get(key+plot))
         hist[i].SetTitle("")
         # the bin at 0 is wrong, either i rerun over all files (not feasible) or I change the bin content to not show up
