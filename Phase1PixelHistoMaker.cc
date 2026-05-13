@@ -1537,24 +1537,26 @@ int main(int argc, char* argv[]) {
     if (debug) std::cout<<"Phase1PixelHistoMaker - normal hiteff plots ok"<<std::endl;
     
 #if DATASTRUCT_VER >= 108
+    // Added by Matej 07-05-26
+    sh.AddHistos("traj", { .fill  = "NewHitEfficiency_vs_TrackEta_vs_TrkPt", .pfs   = {main12, "LayersDisks"},.cuts  = {"ZeroBias", "NewEffCutsNoPt"}, .draw  = "COLZ", .opt   = "logX",.ranges= {0,0, 0,0, 0.0,1.0}});
     // PLOTS for Marton, added by Tiziano 31-01-23
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks",   .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders_vs_Modules",   .pfs={"Layers","DcolScan"},  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.7,1} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LayersDisks",   .pfs={"DcolScan"},                  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.0,1.0} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.0,1.0} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Modules",       .pfs={"Layers","DcolScan"},         .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.0,1.0} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_Ladders_vs_Modules",   .pfs={"Layers","DcolScan"},  .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1", .opt="", .ranges={0,0, 0.0,1.0} });
     // New Efficiency N-1 plots
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="",     .ranges={0,30,  0.7,1, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="TwoCol43",     .ranges={0,30,  0.7,1, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkPt",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoPt"},         .draw="PE1",  .opt="logX", .ranges={0,0,   0.7,1, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkPt",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoPt"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0,   0.7,1, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkD0",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoD0"},         .draw="PE1",  .opt="logX", .ranges={0,0.1, 0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkD0",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoD0"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0.1, 0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkDZ",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoDZ"},         .draw="PE1",  .opt="logX", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkDZ",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoDZ"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DRTrk",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DRTrk",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="TwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DTraj",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="logX", .ranges={0,1,   0.7,1, 0.2,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DTraj",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.7,1, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="",     .ranges={0,30,  0.0,1.0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkNStrip",     .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoNStrip"},     .draw="PE1",  .opt="TwoCol43",     .ranges={0,30,  0.0,1.0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkPt",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoPt"},         .draw="PE1",  .opt="logX", .ranges={0,0,   0.0,1.0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkPt",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoPt"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0,   0.0,1.0, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkD0",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoD0"},         .draw="PE1",  .opt="logX", .ranges={0,0.1, 0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkD0",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoD0"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,0.1, 0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkDZ",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoDZ"},         .draw="PE1",  .opt="logX", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrkDZ",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoDZ"},         .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DRTrk",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DRTrk",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="TwoCol43", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DTraj",         .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="logX", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_DTraj",         .pfs={"LayersDisks",main12},      .cuts={"ZeroBias","NewEffCutsNoHitSep"},     .draw="PE1",  .opt="logXTwoCol43", .ranges={0,1,   0.0,1.0, 0.2,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackAlpha",    .pfs={main12,"LayersDisks"},      .cuts={"ZeroBias","NewEffCuts"},             .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackAlpha",    .pfs={"Layers",main12},           .cuts={"ZeroBias","NewEffCuts"},               .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackAlpha",    .pfs={"DisksRings",main12},                     .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
@@ -1579,8 +1581,10 @@ int main(int argc, char* argv[]) {
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers",main12},              .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackTheta",    .pfs={"InstLumi","Layers","InnerOuter",main12}, .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackTheta",    .pfs={"DisksRings",main12},                     .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="",     .ranges={0,0,   0,0, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackEta",      .pfs={main12,"LayersDisks"},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0,   0.99,1, 0.4,0.4} });
-    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackEta",      .pfs={"LayersDisks",main12},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0,   0.99,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackEta",      .pfs={main12,"LayersDisks"},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0,   0.0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_TrackEta",      .pfs={"LayersDisks",main12},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0,   0.0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LS",            .pfs={main12,"LayersDisks"},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="", .ranges={0,0,   0,1, 0.4,0.4} });
+    sh.AddHistos("traj", { .fill="NewHitEfficiency_vs_LS",            .pfs={"LayersDisks",main12},                    .cuts={"ZeroBias","NewEffCuts"}, .draw="PE1",  .opt="TwoCol43", .ranges={0,0,   0.0,1, 0.4,0.4} });
     // Denominator
     sh.AddHistos("traj", { .fill="TrkNStrip",                   .pfs={main12,"LayersDisks"},            .cuts={"ZeroBias","NewEffCuts"},         .draw="HIST",  .opt="",             .ranges={0,30,  0,0, 0.4,0.4} });
     sh.AddHistos("traj", { .fill="TrkNStrip",                   .pfs={"LayersDisks",main12},            .cuts={"ZeroBias","NewEffCuts"},         .draw="HIST",  .opt="TwoCol43",     .ranges={0,30,  0,0, 0.4,0.4} });
