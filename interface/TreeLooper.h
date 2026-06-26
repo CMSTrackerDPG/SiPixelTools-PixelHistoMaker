@@ -49,12 +49,16 @@ class TreeLooper {
 
  public:
 
-  TreeLooper(TreeReader* tr, Variables* var, int evtloop, int trajloop, int clustloop) { 
+  TreeLooper(TreeReader* tr, Variables* var, int evtloop, int trajloop, int clustloop,
+             Long64_t maxevt=-1, Long64_t maxhit=-1, Long64_t maxclu=-1) {
     tr_=tr;
     var_=var;
     evtloop_=evtloop; 
     trajloop_=trajloop;
     clustloop_=clustloop;
+    maxevt_=maxevt;
+    maxhit_=maxhit;
+    maxclu_=maxclu;
     build_();
     gEnv->SetValue("TFile.Recover", 0);
   }
@@ -67,6 +71,9 @@ class TreeLooper {
   int evtloop_;
   int trajloop_;
   int clustloop_;
+  Long64_t maxevt_;
+  Long64_t maxhit_;
+  Long64_t maxclu_;
   
   TStopwatch* sw_;
   bool sw_reset_;
@@ -445,7 +452,7 @@ class TreeLooper {
 	  tr_->readtrees(f);
 	  if (debug) { std::cout<<"TreeLooper::LoopOnTrees: TreeRead::readtrees\n"; }
 	  Long64_t lumientry = 0, clustentry = 0;
-	  if (trajloop_==1) for (Long64_t i=0, nhit=tr_->nhit(); i<nhit; ++i) {
+    if (trajloop_==1) for (Long64_t i=0, nhit=(maxhit_>=0 ? std::min(tr_->nhit(), maxhit_) : tr_->nhit()); i<nhit; ++i) {
 	  //if (trajloop_==1) for (Long64_t i=0, nhit=tr_->nhit()/10; i<nhit; ++i) {
 	  //if (trajloop_==1) for (Long64_t i=0; i<tr_->nhit(); i+=100000) {
 	    if (debug>1) { std::cout<<"TreeLooper::LoopOnTrees: hit"<<i<<"\n"; }
@@ -458,10 +465,10 @@ class TreeLooper {
 	  }
 	  if (debug) { std::cout<<"TreeLooper::LoopOnTrees: trajloop ok\n"; }
 	  if (tr_->severity) std::cout<<"Severity: "<<tr_->severity<<std::endl;
-	  if (evtloop_>0) { lumientry = 0; for (Long64_t i=0; i<tr_->nevt(); ++i) process_evt_(sh, i, lumientry); }
+    if (evtloop_>0) { lumientry = 0; for (Long64_t i=0, nevt=(maxevt_>=0 ? std::min(tr_->nevt(), maxevt_) : tr_->nevt()); i<nevt; ++i) process_evt_(sh, i, lumientry); }
 	  if (debug) { std::cout<<"TreeLooper::LoopOnTrees: evtloop ok\n"; }
 #if CLUST_LOOP > 0
-	  if (clustloop_==1) for (Long64_t i=0, nclu=tr_->nclu(); i<nclu; ++i) process_clu_(sh,i);
+    if (clustloop_==1) for (Long64_t i=0, nclu=(maxclu_>=0 ? std::min(tr_->nclu(), maxclu_) : tr_->nclu()); i<nclu; ++i) process_clu_(sh,i);
 	  //if (clustloop_==1) for (Long64_t i=0, nclu=tr_->nclu(); i<nclu; i+=40) process_clu_(sh,i);
 	  if (debug) { std::cout<<"TreeLooper::LoopOnTrees: clustloop ok\n"; }
 #endif
@@ -539,7 +546,7 @@ class TreeLooper {
 	badroc_list = new TH1D(name.str().c_str(), ";ROCs;ROC ID (id1*1e4 + id2*1e2 + id3)", 1000,0,1000);
 	double mean = for_mean_rms.GetMean(), rms = for_mean_rms.GetRMS();
 	double threshold = std::min(mean - N_sig_threshold*rms, 0.95);
-	//std::cout<<"Run "<<run<<" mean "<<mean<<" rms "<<rms<<std::endl;
+	std::cout<<"Run "<<run<<" mean "<<mean<<" rms "<<rms<<std::endl;
 	for (auto& rocid_hitcount : run_roclist.second) { // loop on ROC IDs
 	  size_t rocid = rocid_hitcount.first;
 	  double mis = rocid_hitcount.second[0], val = rocid_hitcount.second[1];

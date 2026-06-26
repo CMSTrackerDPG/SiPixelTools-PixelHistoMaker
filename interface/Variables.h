@@ -1894,7 +1894,8 @@ public:
     goodmod = (e.run==1) ? 1 : e.run<238474 ? goodmod_RunI : e.run<285000 ? goodmod_RunII_phase0 : e.run<355095 ? goodmod_RunII_phase1 : goodmod_RunIII_phase1;
     
     // Good roc selecton
-    goodroc = (e.run==1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
+    //goodroc = (e.run==1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
+    goodroc = 1; // Temporarily disable bad ROC exclusion for the efficiency measurement to be in sync with DQM which only has "inactive" flag to guard against bad components
     goodroc_scan = (badroc_runnumber==-1) ? 1: goodroc_list[p1_rocid][p2_rocid][p3_rocid];
     
     //__________________________________________________________________________________________
