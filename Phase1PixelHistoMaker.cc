@@ -579,7 +579,7 @@ int main(int argc, char* argv[]) {
   sh.AddNewFillParams("NBx",              { .nbin= 360, .bins={      0,   3600}, .fill=[&v]{ return v.nbx;             }, .axis_title="Number of bunch-crossings"});
   sh.AddNewFillParams("IntLumi",          { .nbin= 300, .bins={      0,    300}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity [fb^{-1}]"});
   sh.AddNewFillParams("IntLumiRunII",     { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-29.9261; }, .axis_title="Delivered luminosity - Run 2 [fb^{-1}]"});
-  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 330, .bins={      0,    330}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
+  sh.AddNewFillParams("IntLumiRunIII",    { .nbin= 360, .bins={      0,    360}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Run 3 [fb^{-1}]"});
   sh.AddNewFillParams("IntLumi2016",      { .nbin= 200, .bins={      0,    200}, .fill=[&v]{ return v.intlumi-34.1252; }, .axis_title="Delivered luminosity - 2016 [fb^{-1}]", .def_range={0,150}});
   sh.AddNewFillParams("IntLumi2017",      { .nbin= 100, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
   sh.AddNewFillParams("IntLumi2017Fine",  { .nbin=1000, .bins={      0,    200}, .fill=[&v]{ return v.intlumi;         }, .axis_title="Delivered luminosity - Phase-1 [fb^{-1}]", .def_range={0,125}});
